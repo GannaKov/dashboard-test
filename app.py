@@ -1,5 +1,6 @@
 import pandas as pd # pip install pandas openpyxl
 import streamlit as st  # pip install streamlit
+
 import plotly.express as px  # pip install plotly-express
 
 
@@ -7,7 +8,17 @@ import plotly.express as px  # pip install plotly-express
 # emojis: https://www.webfx.com/tools/emoji-cheat-sheet/
 st.set_page_config(page_title="Sales Dashboard", page_icon=":bar_chart:", layout="wide")
 st.title("Sales Dashboard")
-st.write("Welcome to the sales dashboard!")
+
+
+
+
+# custom CSS
+# read HTML с CSS
+# with open('custom_style.html', 'r') as f:
+#     custom_css = f.read()
+# st.html(custom_css)
+st.html("./custom.css")
+
 # ---- READ EXCEL ----
 @st.cache_data
 def get_data_from_excel():
@@ -20,9 +31,9 @@ def get_data_from_excel():
         nrows=1000,
     )
     # Add 'hour' column to dataframe
-    #df["hour"] = pd.to_datetime(df["Time"], format="%H:%M:%S").dt.hour
+    df["hour"] = pd.to_datetime(df["Time"], format="%H:%M:%S").dt.hour
     return df
-    print(df.head())
+    
 
 df = get_data_from_excel()
 
@@ -42,7 +53,9 @@ st.sidebar.header("Please Filter Here:")
 city = st.sidebar.multiselect(
     "Select the City:",
     options=df["City"].unique(),
-    default=df["City"].unique()
+   
+    default=df["City"].unique(),
+    
 )
 
 customer_type = st.sidebar.multiselect(
@@ -54,14 +67,18 @@ customer_type = st.sidebar.multiselect(
 gender = st.sidebar.multiselect(
     "Select the Gender:",
     options=df["Gender"].unique(),
-    default=df["Gender"].unique()
+    
+    #placeholder="Gender",
+    #default=None,
+    default=df["Gender"].unique(),
+    
 )
 
 df_selection = df.query(
     "City == @city & Customer_type ==@customer_type & Gender == @gender"
 )
 
-st.dataframe(df_selection)
+#st.dataframe(df_selection)
 
 
 # Check if the dataframe is empty:
@@ -72,7 +89,7 @@ if df_selection.empty:
 
 # ---- MAINPAGE ----
 st.title(":bar_chart: Sales Dashboard")
-st.markdown("##")
+st.markdown("#")
 
 # TOP KPI's
 total_sales = int(df_selection["Total"].sum())
@@ -92,3 +109,38 @@ with right_column:
     st.subheader(f"US $ {average_sale_by_transaction}")
 
 st.markdown("""---""")
+
+# SALES BY PRODUCT LINE [BAR CHART]
+sales_by_product_line = df_selection.groupby(by=["Product line"])[["Total"]].sum().sort_values(by="Total")
+fig_product_sales = px.bar(
+    sales_by_product_line,
+    x="Total",
+    y=sales_by_product_line.index,
+    orientation="h",
+    title="<b>Sales by Product Line</b>",
+    color_discrete_sequence=["#0083B8"] * len(sales_by_product_line),
+    template="plotly_white",
+)
+
+# fig_product_sales.update_layout(
+#     plot_bgcolor="rgba(0,0,0,0)",
+#     xaxis=(dict(showgrid=False))
+# )
+#st.plotly_chart(fig_product_sales)
+
+# SALES BY HOUR [BAR CHART]
+sales_by_hour = df_selection.groupby(by=["hour"])[["Total"]].sum()
+
+fig_hourly_sales = px.bar(
+    sales_by_hour,
+    x=sales_by_hour.index,
+    y="Total",
+    title="<b>Sales by hour</b>",
+    color_discrete_sequence=["#0083B8"] * len(sales_by_hour),
+    template="plotly_white",
+)
+
+#st.plotly_chart(fig_hourly_sales)
+left_column, right_column = st.columns(2)
+left_column.plotly_chart(fig_hourly_sales, use_container_width=True)
+right_column.plotly_chart(fig_product_sales, use_container_width=True)
