@@ -142,5 +142,6 @@ fig_hourly_sales = px.bar(
 
 #st.plotly_chart(fig_hourly_sales)
 left_column, right_column = st.columns(2)
+
 left_column.plotly_chart(fig_hourly_sales, use_container_width=True)
 right_column.plotly_chart(fig_product_sales, use_container_width=True)
