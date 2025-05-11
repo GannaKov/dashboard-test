@@ -5,4 +5,6 @@
 Local URL: http://localhost:8501
 
 in Python terminal
-streamlit app.py
+streamlit run app.py
+
+#31333f

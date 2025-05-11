@@ -16,9 +16,21 @@ st.html("""
     /* inset CSS to make the cursor a pointer on the dropdown arrow of multiselect/selectbox*/
     svg[title="open"] {
         cursor: pointer;
+        color: #505258;
     }
+    svg[title="open"]:hover {color: #31333f }   
+        
+        ul[data-testid="stSelectboxVirtualDropdown"] li div div {
+        color: #31333f 
+    }
+        
+    .st-dt:hover {
+    fill: #31333f ;}
+        
     .st-emotion-cache-1xulwhk{font-size:1rem;}
+        
     .st-emotion-cache-ocqkz7{gap:2rem;}
+        
     #MainMenu {visibility: hidden;}
         #  footer {visibility: hidden;}
         #   header {visibility: hidden;}
