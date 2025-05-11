@@ -1,0 +1,35 @@
+svg[title="open"] {
+  cursor: pointer;
+  color: #505258;
+}
+svg[title="open"]:hover {
+  color: #31333f;
+}
+
+/* color in options dropdown*/
+ul[data-testid="stSelectboxVirtualDropdown"] li div div {
+  color: #31333f;
+}
+
+/* Hover clean input*/
+.st-dt:hover {
+  fill: #31333f;
+}
+
+/* font-size label inputs */
+.st-emotion-cache-1xulwhk {
+  font-size: 1rem;
+}
+
+/* between chats*/
+.st-emotion-cache-ocqkz7 {
+  gap: 2rem;
+}
+
+/* hide top menu */
+#MainMenu {
+  visibility: hidden;
+}
+/* hide header and footer */
+/* footer {visibility: hidden;} */
+/* header {visibility: hidden;} */

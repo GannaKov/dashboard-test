@@ -1,5 +1,6 @@
 import pandas as pd # pip install pandas openpyxl
 import streamlit as st  # pip install streamlit
+
 import plotly.express as px  # pip install plotly-express
 
 
@@ -7,35 +8,17 @@ import plotly.express as px  # pip install plotly-express
 # emojis: https://www.webfx.com/tools/emoji-cheat-sheet/
 st.set_page_config(page_title="Sales Dashboard", page_icon=":bar_chart:", layout="wide")
 st.title("Sales Dashboard")
-st.write("Welcome to the sales dashboard!")
+
+
 
 
 # custom CSS
-st.html("""
-    <style>
-    /* inset CSS to make the cursor a pointer on the dropdown arrow of multiselect/selectbox*/
-    svg[title="open"] {
-        cursor: pointer;
-        color: #505258;
-    }
-    svg[title="open"]:hover {color: #31333f }   
-        
-        ul[data-testid="stSelectboxVirtualDropdown"] li div div {
-        color: #31333f 
-    }
-        
-    .st-dt:hover {
-    fill: #31333f ;}
-        
-    .st-emotion-cache-1xulwhk{font-size:1rem;}
-        
-    .st-emotion-cache-ocqkz7{gap:2rem;}
-        
-    #MainMenu {visibility: hidden;}
-        #  footer {visibility: hidden;}
-        #   header {visibility: hidden;}
-    </style>
-""")
+# read HTML с CSS
+# with open('custom_style.html', 'r') as f:
+#     custom_css = f.read()
+# st.html(custom_css)
+st.html("./custom.css")
+
 # ---- READ EXCEL ----
 @st.cache_data
 def get_data_from_excel():
