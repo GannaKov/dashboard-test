@@ -89,7 +89,7 @@ if df_selection.empty:
 
 # ---- MAINPAGE ----
 st.title(":bar_chart: Sales Dashboard")
-st.markdown("#")
+st.markdown("")
 
 # TOP KPI's
 total_sales = int(df_selection["Total"].sum())
@@ -97,16 +97,17 @@ average_rating = round(df_selection["Rating"].mean(), 1)
 star_rating = ":star:" * int(round(average_rating, 0))
 average_sale_by_transaction = round(df_selection["Total"].mean(), 2)
 
-left_column, middle_column, right_column = st.columns(3)
+left_column,  right_column = st.columns(2)
 with left_column:
     st.subheader("Total Sales:")
     st.subheader(f"US $ {total_sales:,}")
-with middle_column:
+with right_column:
     st.subheader("Average Rating:")
     st.subheader(f"{average_rating} {star_rating}")
-with right_column:
-    st.subheader("Average Sales Per Transaction:")
-    st.subheader(f"US $ {average_sale_by_transaction}")
+
+st.markdown("")   
+
+st.subheader(f"Average Sales Per Transaction:&nbsp;&nbsp;&nbsp;US $ {average_sale_by_transaction}")  
 
 st.markdown("""---""")
 
@@ -141,7 +142,7 @@ fig_hourly_sales = px.bar(
 )
 
 #st.plotly_chart(fig_hourly_sales)
-left_column, right_column = st.columns(2)
+left_column, right_column = st.columns(2, gap="medium")
 
 left_column.plotly_chart(fig_hourly_sales, use_container_width=True)
 right_column.plotly_chart(fig_product_sales, use_container_width=True)
