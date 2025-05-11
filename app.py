@@ -8,6 +8,18 @@ import plotly.express as px  # pip install plotly-express
 st.set_page_config(page_title="Sales Dashboard", page_icon=":bar_chart:", layout="wide")
 st.title("Sales Dashboard")
 st.write("Welcome to the sales dashboard!")
+
+
+# custom CSS
+st.markdown("""
+    <style>
+    /* inset CSS to make the cursor a pointer on the dropdown arrow of multiselect/selectbox*/
+    svg[title="open"] {
+        cursor: pointer;
+    }
+    .st-emotion-cache-1xulwhk{font-size:1rem;}
+    </style>
+""", unsafe_allow_html=True)
 # ---- READ EXCEL ----
 @st.cache_data
 def get_data_from_excel():
@@ -42,7 +54,9 @@ st.sidebar.header("Please Filter Here:")
 city = st.sidebar.multiselect(
     "Select the City:",
     options=df["City"].unique(),
-    default=df["City"].unique()
+   
+    default=df["City"].unique(),
+    
 )
 
 customer_type = st.sidebar.multiselect(
@@ -54,7 +68,11 @@ customer_type = st.sidebar.multiselect(
 gender = st.sidebar.multiselect(
     "Select the Gender:",
     options=df["Gender"].unique(),
-    default=df["Gender"].unique()
+    
+    #placeholder="Gender",
+    #default=None,
+    default=df["Gender"].unique(),
+    
 )
 
 df_selection = df.query(
