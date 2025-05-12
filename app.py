@@ -113,6 +113,7 @@ st.markdown("""---""")
 
 # SALES BY PRODUCT LINE [BAR CHART]
 sales_by_product_line = df_selection.groupby(by=["Product line"])[["Total"]].sum().sort_values(by="Total")
+
 fig_product_sales = px.bar(
     sales_by_product_line,
     x="Total",
@@ -146,3 +147,14 @@ left_column, right_column = st.columns(2, gap="medium")
 
 left_column.plotly_chart(fig_hourly_sales, use_container_width=True)
 right_column.plotly_chart(fig_product_sales, use_container_width=True)
+
+#------------
+gender_counts = df['Gender'].value_counts().reset_index()
+gender_counts.columns = ['Gender', 'Count']
+
+# Строим pie chart
+fig = px.pie(gender_counts, names='Gender', values='Count', title='Gender Distribution',color='Gender',
+             color_discrete_map={'Male':'royalblue',
+                                 'Female':'tomato',
+                                 'Other':'green'})
+st.plotly_chart(fig)
