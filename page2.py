@@ -7,6 +7,24 @@ from data import get_data_from_excel
 df = get_data_from_excel()
 
 st.html("./custom.css")
-#@st.cache_data
-st.markdown("# Page 2 🧑‍🤝‍🧑")
-st.sidebar.markdown("# Page 2 ❄️")
+
+# ---- SIDEBAR ----
+st.sidebar.header("Please Filter Here:")
+
+# ---- PAGE ----
+st.title("📈 Users Dashboard")
+st.markdown("")
+
+
+#------------
+gender_counts = df['Gender'].value_counts().reset_index()
+gender_counts.columns = ['Gender', 'Count']
+
+# pie chart
+fig = px.pie(gender_counts, names='Gender', values='Count', title='Gender Distribution',color='Gender',
+             color_discrete_map={'Male':'royalblue',
+                                 'Female':'tomato',
+                                 'Other':'green'})
+st.plotly_chart(fig)
+
+

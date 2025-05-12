@@ -55,7 +55,7 @@ df_selection = df.query(
     "City == @city & Customer_type ==@customer_type & Gender == @gender"
 )
 
-#st.dataframe(df_selection)
+
 
 
 # Check if the dataframe is empty:
@@ -125,13 +125,3 @@ left_column, right_column = st.columns(2, gap="medium")
 left_column.plotly_chart(fig_hourly_sales, use_container_width=True)
 right_column.plotly_chart(fig_product_sales, use_container_width=True)
 
-#------------
-gender_counts = df['Gender'].value_counts().reset_index()
-gender_counts.columns = ['Gender', 'Count']
-
-# Строим pie chart
-fig = px.pie(gender_counts, names='Gender', values='Count', title='Gender Distribution',color='Gender',
-             color_discrete_map={'Male':'royalblue',
-                                 'Female':'tomato',
-                                 'Other':'green'})
-st.plotly_chart(fig)

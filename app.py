@@ -26,8 +26,8 @@ st.logo(
 #---Pages---
 # Define the pages
 
-main_page = st.Page("page1.py", title="Sales Overview", icon="📈")
-page_2 = st.Page("page2.py", title="User Analytics", icon="🧑‍🤝‍🧑")
+main_page = st.Page("page1.py", title="Sales Overview", icon="📊")
+page_2 = st.Page("page2.py", title="User Analytics", icon="📈")
 # Set up navigation
 pg = st.navigation([main_page, page_2,])
 # Run the selected page
