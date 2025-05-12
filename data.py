@@ -9,7 +9,7 @@ def get_data_from_excel():
         engine="openpyxl",
         sheet_name="Sales",
         skiprows=3,
-        usecols="B:R",
+        usecols="B:S",
         nrows=1000,
     )
     df["hour"] = pd.to_datetime(df["Time"], format="%H:%M:%S").dt.hour
