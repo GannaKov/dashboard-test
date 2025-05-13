@@ -63,13 +63,34 @@ fig_city = px.pie(city_counts, names='City', values='Count', title='City Distrib
 # pie chart Customer_type
 customer_type_counts = df['Customer_type'].value_counts().reset_index()
 customer_type_counts.columns = ['Type', 'Count']
-fig_customer_type = px.pie(customer_type_counts, names='Type', values='Count', title='Customer Type Distribution')
+fig_customer_type = px.pie(customer_type_counts, names='Type', values='Count', title='Customer Type Distribution', color_discrete_sequence=px.colors.qualitative.Dark2)
 #st.plotly_chart(fig_customer_type)
 
-left_column, middle_column, right_column = st.columns(3,gap="medium")
-left_column.plotly_chart(fig_gender, use_container_width=True)
-middle_column.plotly_chart(fig_city, use_container_width=True)
-right_column.plotly_chart(fig_customer_type, use_container_width=True)
+# pie chart Age
+bins = [9, 19, 29, 39, 49, 59, 69]
+labels = ['10-19', '20-29', '30-39', '40-49', '50-59', '60-69']
+df['Age Group'] = pd.cut(df['Age'], bins=bins, labels=labels, right=False)
+age_group_counts = df['Age Group'].value_counts().sort_index().reset_index()
+age_group_counts.columns = ['Age Group', 'Count']
+fig_age = px.pie(
+    age_group_counts,
+    names='Age Group',
+    values='Count',
+    title='Age Group Distribution',
+    color_discrete_sequence=px.colors.qualitative.Bold
+)
+#st.plotly_chart(fig_age)
 
+
+
+
+
+first_column, second_column,third_column , = st.columns(3,gap="medium")
+first_column.plotly_chart(fig_gender, use_container_width=True)
+second_column.plotly_chart(fig_age, use_container_width=True)
+#third_column , fourth_column= st.columns(2,gap="large")
+third_column.plotly_chart(fig_customer_type, use_container_width=True)
+#fourth_column.plotly_chart(fig_city, use_container_width=True)
+st.plotly_chart(fig_city)
 st.markdown("""---""") 
 
