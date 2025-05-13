@@ -8,7 +8,12 @@ df = get_data_from_excel()
 
 st.html("./custom.css")
 
-
+# for age group
+# Create age groups
+bins = [9, 19, 29, 39, 49, 59, 69]
+labels = ['15-19', '20-29', '30-39', '40-49', '50-59', '60-69']
+df['Age Group'] = pd.cut(df['Age'], bins=bins, labels=labels, right=False)
+#age_category=df['Age Group'].cat.categories.tolist()
 # ---- SIDEBAR ----
 
 st.sidebar.header("Please Filter Here:")
@@ -39,10 +44,20 @@ gender = st.sidebar.selectbox(
    
 )
 
+# input age group
+options_age_group = df["Age Group"].cat.categories.tolist()
+#options_age_group=df["Age Group"].unique()[::-1] 
 
-df_selection = df.query(
-    "City == @city & Customer_type ==@customer_type & Gender == @gender"
+age_group = st.sidebar.selectbox(
+    "Select Age Group:",
+    (options_age_group),
+   
+   
 )
+
+# df_selection = df.query(
+#     "City == @city & Customer_type ==@customer_type & Gender == @gender & `Age Group` == @age_group" 
+# )
 
 # ---- PAGE ----
 st.title("📈 Users Dashboard")
@@ -73,10 +88,8 @@ fig_customer_type = px.pie(customer_type_counts, names='Type', values='Count', t
 #st.plotly_chart(fig_customer_type)
 
 # pie chart Age
-bins = [9, 19, 29, 39, 49, 59, 69]
-labels = ['10-19', '20-29', '30-39', '40-49', '50-59', '60-69']
-df['Age Group'] = pd.cut(df['Age'], bins=bins, labels=labels, right=False)
 age_group_counts = df['Age Group'].value_counts().sort_index().reset_index()
+
 age_group_counts.columns = ['Age Group', 'Count']
 fig_age = px.pie(
     age_group_counts,
@@ -91,7 +104,7 @@ fig_age = px.pie(
 
 
 
-first_column, second_column,third_column , = st.columns(3,gap="medium")
+first_column, second_column,third_column , = st.columns(3,gap="small")
 first_column.plotly_chart(fig_gender, use_container_width=True)
 second_column.plotly_chart(fig_age, use_container_width=True)
 third_column.plotly_chart(fig_customer_type, use_container_width=True)
@@ -101,4 +114,63 @@ st.markdown("""---""")
 #-----------------------
 #-----------------------
 
+# Distribution in Age Group
+# By City
 
+st.subheader(f"Distribution by Age Group")
+df_selection_for_age_by_city = df.query(
+    "City == @city " 
+)
+
+age_group_counts_by_city = df_selection_for_age_by_city['Age Group'].value_counts().sort_index().reset_index()
+
+age_group_counts_by_city.columns = ['Age Group', 'Count'] #alreade done in the above code
+fig_age_by_city = px.pie(
+    age_group_counts_by_city,
+    names='Age Group',
+    values='Count',
+    title=f"Distribution by Age Group in {city}",
+    color_discrete_sequence=px.colors.qualitative.Bold
+)
+
+#------------Age by customer Type---
+
+df_selection_for_age_by_customer_type = df.query(
+    "Customer_type ==@customer_type" 
+)
+
+age_group_counts_by_customer_type = df_selection_for_age_by_customer_type['Age Group'].value_counts().sort_index().reset_index()
+
+age_group_counts_by_customer_type.columns = ['Age Group', 'Count'] #alreade done in the above code
+fig_age_by_customer_type = px.pie(
+    age_group_counts_by_customer_type,
+    names='Age Group',
+    values='Count',
+    title=f"Distribution by Age Group in {customer_type}",
+    color_discrete_sequence=px.colors.qualitative.Bold
+)
+
+#--------Gender-------
+# df_selection_for_age = df.query(
+#     "City == @city & Customer_type ==@customer_type & Gender == @gender " 
+# )
+df_selection_for_age_by_gender = df.query(
+    "Gender == @gender" 
+)
+
+age_group_counts_by_gender = df_selection_for_age_by_gender['Age Group'].value_counts().sort_index().reset_index()
+
+age_group_counts_by_gender.columns = ['Age Group', 'Count'] 
+fig_age_by_gender = px.pie(
+    age_group_counts_by_gender,
+    names='Age Group',
+    values='Count',
+    title=f"Distribution by Age Group in {gender}",
+    color_discrete_sequence=px.colors.qualitative.Bold
+)
+
+
+first_age_column, second_age_column,third_age_column , = st.columns(3,gap="small")
+first_age_column.plotly_chart(fig_age_by_city, use_container_width=True)
+second_age_column.plotly_chart(fig_age_by_customer_type, use_container_width=True)
+third_age_column.plotly_chart(fig_age_by_gender, use_container_width=True)
