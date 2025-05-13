@@ -12,27 +12,33 @@ st.html("./custom.css")
 # ---- SIDEBAR ----
 
 st.sidebar.header("Please Filter Here:")
-city = st.sidebar.multiselect(
+
+
+# input city
+options_city=df["City"].unique()
+city =  st.sidebar.selectbox(
     "Select City:",
-    options=df["City"].unique(),
+    (options_city),
    
-    default=df["City"].unique(),
-    
 )
 
-customer_type = st.sidebar.multiselect(
+# input customer type
+
+options_customer_type=df["Customer_type"].unique()
+customer_type = st.sidebar.selectbox(
     "Select Customer Type:",
-    options=df["Customer_type"].unique(),
-    default=df["Customer_type"].unique(),
+    (options_customer_type),
+   
 )
 
-gender = st.sidebar.multiselect(
+#input gender
+options_gender=df["Gender"].unique()
+gender = st.sidebar.selectbox(
     "Select Gender:",
-    options=df["Gender"].unique(),
+    (options_gender),
    
-    default=df["Gender"].unique(),
-    
 )
+
 
 df_selection = df.query(
     "City == @city & Customer_type ==@customer_type & Gender == @gender"
@@ -88,9 +94,11 @@ fig_age = px.pie(
 first_column, second_column,third_column , = st.columns(3,gap="medium")
 first_column.plotly_chart(fig_gender, use_container_width=True)
 second_column.plotly_chart(fig_age, use_container_width=True)
-#third_column , fourth_column= st.columns(2,gap="large")
 third_column.plotly_chart(fig_customer_type, use_container_width=True)
-#fourth_column.plotly_chart(fig_city, use_container_width=True)
+#fourth
 st.plotly_chart(fig_city)
 st.markdown("""---""") 
+#-----------------------
+#-----------------------
+
 

@@ -37,3 +37,8 @@ ul[data-testid="stSelectboxVirtualDropdown"] li div div {
   padding-top: 3rem;
   padding-bottom: 3rem;
 }
+
+/* For page 2 */
+.st-bj {
+  color: #31333f;
+}
