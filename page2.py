@@ -243,13 +243,61 @@ third_city_column.plotly_chart(fig_city_by_gender, use_container_width=True)
 st.subheader(f"Distribution by Gender")
 # By City
 
+df_selection_for_gender_by_city = df.query(
+    "City == @city " 
+)
+
+gender_group_counts_by_city = df_selection_for_gender_by_city['Gender'].value_counts().sort_index().reset_index()
+
+gender_group_counts_by_city.columns = ['Gender', 'Count'] #alreade done in the above code
+fig_gender_by_city = px.pie(
+    gender_group_counts_by_city,
+    names='Gender',
+    values='Count',
+    title=f"Distribution by Gender in {city}",
+    color_discrete_sequence=px.colors.qualitative.Dark2
+)
+#st.plotly_chart(fig_gender_by_city)
 
 # By Customer Type
+df_selection_for_gender_by_customer_type = df.query(
+    "Customer_type ==@customer_type" 
+)
 
+gender_group_counts_by_customer_type = df_selection_for_gender_by_customer_type['Gender'].value_counts().sort_index().reset_index()
+
+gender_group_counts_by_customer_type.columns = ['Gender', 'Count']
+fig_gender_by_customer_type = px.pie(
+    gender_group_counts_by_customer_type,
+    names='Gender',
+    values='Count',
+    title=f'Distribution by Gender in type "{customer_type}"',
+    color_discrete_sequence=px.colors.qualitative.Dark2
+)
+#st.plotly_chart(fig_gender_by_customer_type)
 
 
 # By Age Group
+df_selection_for_gender_by_age = df.query(
+    "`Age Group` == @age_group" 
+)
 
+gender_group_counts_by_age = df_selection_for_gender_by_age['Gender'].value_counts().sort_index().reset_index()
+
+gender_group_counts_by_age.columns = ['Gender', 'Count'] #alreade done in the above code
+fig_gender_by_age = px.pie(
+    gender_group_counts_by_age,
+    names='Gender',
+    values='Count',
+    title=f"Distribution by Gender in {age_group}",
+    color_discrete_sequence=px.colors.qualitative.Dark2
+)
+#st.plotly_chart(fig_gender_by_age)
+
+first_gender_column, second_gender_column,third_gender_column  = st.columns(3,gap="small")
+first_gender_column.plotly_chart(fig_gender_by_age, use_container_width=True)
+second_gender_column.plotly_chart(fig_gender_by_customer_type, use_container_width=True)
+third_gender_column.plotly_chart(fig_gender_by_city, use_container_width=True)
 #=========================================
 # df_selection_for_age = df.query(
 #     "City == @city & Customer_type ==@customer_type & Gender == @gender " 
