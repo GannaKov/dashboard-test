@@ -46,7 +46,6 @@ gender = st.sidebar.selectbox(
 
 # input age group
 options_age_group = df["Age Group"].cat.categories.tolist()
-#options_age_group=df["Age Group"].unique()[::-1] 
 
 age_group = st.sidebar.selectbox(
     "Select Age Group:",
@@ -124,7 +123,7 @@ df_selection_for_age_by_city = df.query(
 
 age_group_counts_by_city = df_selection_for_age_by_city['Age Group'].value_counts().sort_index().reset_index()
 
-age_group_counts_by_city.columns = ['Age Group', 'Count'] #alreade done in the above code
+age_group_counts_by_city.columns = ['Age Group', 'Count'] 
 fig_age_by_city = px.pie(
     age_group_counts_by_city,
     names='Age Group',
@@ -141,7 +140,7 @@ df_selection_for_age_by_customer_type = df.query(
 
 age_group_counts_by_customer_type = df_selection_for_age_by_customer_type['Age Group'].value_counts().sort_index().reset_index()
 
-age_group_counts_by_customer_type.columns = ['Age Group', 'Count'] #alreade done in the above code
+age_group_counts_by_customer_type.columns = ['Age Group', 'Count'] 
 fig_age_by_customer_type = px.pie(
     age_group_counts_by_customer_type,
     names='Age Group',
@@ -173,9 +172,7 @@ first_age_column.plotly_chart(fig_age_by_city, use_container_width=True)
 second_age_column.plotly_chart(fig_age_by_customer_type, use_container_width=True)
 third_age_column.plotly_chart(fig_age_by_gender, use_container_width=True)
 #=========================================
-# df_selection_for_age = df.query(
-#     "City == @city & Customer_type ==@customer_type & Gender == @gender " 
-# )
+
 # Distribution in City
 # By Age Group
 
@@ -186,7 +183,7 @@ df_selection_for_city_by_age = df.query(
 
 city_group_counts_by_age = df_selection_for_city_by_age['City'].value_counts().sort_index().reset_index()
 
-city_group_counts_by_age.columns = ['City', 'Count'] #alreade done in the above code
+city_group_counts_by_age.columns = ['City', 'Count'] 
 fig_city_by_age = px.pie(
     city_group_counts_by_age,
     names='City',
@@ -195,6 +192,7 @@ fig_city_by_age = px.pie(
     color_discrete_sequence=px.colors.qualitative.Plotly
 )
 #st.plotly_chart(fig_city_by_age)
+
 #------------City by customer Type---
 
 df_selection_for_city_by_customer_type = df.query(
@@ -212,6 +210,7 @@ fig_city_by_customer_type = px.pie(
     color_discrete_sequence=px.colors.qualitative.Plotly
 )
 #st.plotly_chart(fig_city_by_customer_type)
+
 #--------City by Gender-------
 
 df_selection_for_city_by_gender = df.query(
@@ -236,12 +235,11 @@ second_city_column.plotly_chart(fig_city_by_customer_type, use_container_width=T
 third_city_column.plotly_chart(fig_city_by_gender, use_container_width=True)
 
 #=========================================
-# df_selection_for_age = df.query(
-#     "City == @city & Customer_type ==@customer_type & Gender == @gender " 
-# )
+
 # Distribution in Gender
 st.subheader(f"Distribution by Gender")
-# By City
+
+# Gender By City
 
 df_selection_for_gender_by_city = df.query(
     "City == @city " 
@@ -249,7 +247,7 @@ df_selection_for_gender_by_city = df.query(
 
 gender_group_counts_by_city = df_selection_for_gender_by_city['Gender'].value_counts().sort_index().reset_index()
 
-gender_group_counts_by_city.columns = ['Gender', 'Count'] #alreade done in the above code
+gender_group_counts_by_city.columns = ['Gender', 'Count'] 
 fig_gender_by_city = px.pie(
     gender_group_counts_by_city,
     names='Gender',
@@ -259,7 +257,7 @@ fig_gender_by_city = px.pie(
 )
 #st.plotly_chart(fig_gender_by_city)
 
-# By Customer Type
+# Gender By Customer Type
 df_selection_for_gender_by_customer_type = df.query(
     "Customer_type ==@customer_type" 
 )
@@ -277,14 +275,14 @@ fig_gender_by_customer_type = px.pie(
 #st.plotly_chart(fig_gender_by_customer_type)
 
 
-# By Age Group
+# Gender By Age Group
 df_selection_for_gender_by_age = df.query(
     "`Age Group` == @age_group" 
 )
 
 gender_group_counts_by_age = df_selection_for_gender_by_age['Gender'].value_counts().sort_index().reset_index()
 
-gender_group_counts_by_age.columns = ['Gender', 'Count'] #alreade done in the above code
+gender_group_counts_by_age.columns = ['Gender', 'Count'] 
 fig_gender_by_age = px.pie(
     gender_group_counts_by_age,
     names='Gender',
@@ -299,16 +297,63 @@ first_gender_column.plotly_chart(fig_gender_by_age, use_container_width=True)
 second_gender_column.plotly_chart(fig_gender_by_customer_type, use_container_width=True)
 third_gender_column.plotly_chart(fig_gender_by_city, use_container_width=True)
 #=========================================
-# df_selection_for_age = df.query(
-#     "City == @city & Customer_type ==@customer_type & Gender == @gender " 
-# )
+
 # Distribution by Customer Type
 st.subheader(f"Distribution by Customer Type")
-# By City
 
+# Customer Type By City
+df_selection_for_customer_type_by_city = df.query(
+    "City == @city " 
+)
 
-# By Age Group
+customer_type_group_counts_by_city = df_selection_for_customer_type_by_city['Customer_type'].value_counts().sort_index().reset_index()
 
+customer_type_group_counts_by_city.columns = ['Customer Type', 'Count'] 
+fig_customer_type_by_city = px.pie(
+    customer_type_group_counts_by_city,
+    names='Customer Type',
+    values='Count',
+    title=f"Distribution by Customer Type in {city}",
+    color_discrete_sequence=px.colors.qualitative.Set1
+)
+#st.plotly_chart(fig_customer_type_by_city)
 
+# Customer Type By Age Group
 
-# By Gender
+df_selection_for_customer_type_by_age = df.query(
+    "`Age Group` == @age_group" 
+)
+
+customer_type_counts_by_age = df_selection_for_customer_type_by_age['Customer_type'].value_counts().sort_index().reset_index()
+
+customer_type_counts_by_age.columns = ['Customer Type', 'Count'] 
+fig_customer_type_by_age = px.pie(
+    customer_type_counts_by_age,
+    names='Customer Type',
+    values='Count',
+    title=f"Distribution by Customer Type in {age_group}",
+    color_discrete_sequence=px.colors.qualitative.Set1
+)
+#st.plotly_chart(fig_customer_type_by_age)
+
+# Customer Type By Gender
+df_selection_for_customer_type_by_gender = df.query(
+    "Gender == @gender" 
+)
+
+customer_type_group_counts_by_gender = df_selection_for_customer_type_by_gender['Customer_type'].value_counts().sort_index().reset_index()
+
+customer_type_group_counts_by_gender.columns = ['Customer Type', 'Count'] 
+fig_customer_type_by_gender = px.pie(
+    customer_type_group_counts_by_gender,
+    names='Customer Type',
+    values='Count',
+    title=f"Distribution by Customer Type for {gender}",
+    color_discrete_sequence=px.colors.qualitative.Set1
+)
+#st.plotly_chart(fig_customer_type_by_gender)
+
+first_customer_type_column, second_customer_type_column,third_customer_type_column  = st.columns(3,gap="small")
+first_customer_type_column.plotly_chart(fig_customer_type_by_age, use_container_width=True)
+second_customer_type_column.plotly_chart(fig_customer_type_by_gender, use_container_width=True)
+third_customer_type_column.plotly_chart(fig_customer_type_by_city, use_container_width=True)
