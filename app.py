@@ -45,8 +45,10 @@ st.logo(
 
 main_page = st.Page("page1.py", title="Sales Overview", icon="📊")
 page_2 = st.Page("page2.py", title="User Analytics", icon="📈")
+page_3 = st.Page("view_data.py", title="Sales Data", icon="📋")
+page_4 = st.Page("add_sale.py", title="Add Sale", icon="➕")
 # Set up navigation
-pg = st.navigation([main_page, page_2,])
+pg = st.navigation([main_page, page_2,page_3,page_4])
 # Run the selected page
 pg.run()
 #-------------------
