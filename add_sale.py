@@ -4,7 +4,7 @@ import streamlit as st  # pip install streamlit
 #from data import get_data_from_excel
 st.html("./custom.css")
 
-st.title("📋 Sales Data")
+st.title("📋 Add Sale")
 st.markdown("")
 invoice_id= st.text_input("Invoice ID", "",max_chars =11,placeholder ="111-11-1111", help="Enter invoice ID")
 st.write("The current movie title is", invoice_id)
@@ -22,6 +22,7 @@ customer_type =st.radio(
     "Customer Type",
     ["Member", "Normal"],
     horizontal=True, 
+    help="Select customer type",
 )
 gender = st.radio("Gender", ["Female","Male","Other"], horizontal=True, help="Select gender")
 product_line = st.selectbox(
