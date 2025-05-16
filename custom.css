@@ -50,3 +50,7 @@ div[data-baseweb="select"] > div {
   background-color: #f5f5f5 !important;
   color: black;
 }
+div[data-baseweb="base-input"] > input {
+  background-color: #f5f5f5 !important;
+  color: black;
+}

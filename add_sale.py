@@ -30,5 +30,15 @@ product_line = st.selectbox(
     ["Health and beauty","Food and beverages", "Fashion accessories", "Electronic accessories", "Home and lifestyle", "Sports and travel"], help="Select a product line"
 )
 
+#--------------
+age=number = st.number_input(
+    "Age", value=None, placeholder="18", min_value=15, max_value=120, step=1, help="Enter age"
+)
 
+
+rating=number = st.number_input(
+    "Rating", value=None, placeholder="10", min_value=0.0, max_value=10.0, step=0.1, help="Enter rating"
+)
+# if selected is not None:
+#     st.markdown(f"You selected {sentiment_mapping[selected]} star(s).")
 
