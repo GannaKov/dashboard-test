@@ -74,10 +74,23 @@ today = datetime.datetime.now()
 start_date = datetime.date(2022, 1, 1)
 date = st.date_input("Date",value=today, min_value=start_date,max_value=today,  format="YYYY-MM-DD", help="Select a date")
 # time = st.time_input("Time", value=None, help="Select a time")
-hour = st.selectbox("Hour", list(range(0, 24)), format_func=lambda x: f"{x:02}")
-minute = st.selectbox("Minute", list(range(0, 60)), format_func=lambda x: f"{x:02}")
+
+# hour = st.selectbox("Hour", list(range(0, 24)), format_func=lambda x: f"{x:02}")
+# minute = st.selectbox("Minute", list(range(0, 60)), format_func=lambda x: f"{x:02}")
+
+container = st.container(border=True,key="time_container")
+with container:
+    st.write("Select time:")
+    col1, col2 = st.columns(2)
+
+    with col1:
+        hour = st.selectbox("Hour", list(range(0, 24)), format_func=lambda x: f"{x:02}")
+
+    with col2:
+        minute = st.selectbox("Minute", list(range(0, 60)), format_func=lambda x: f"{x:02}")
+    
+
 time = datetime.time(hour, minute)
 st.write("Selected time:", time)
 
-st.write("The current date is", date)
 #----------------
