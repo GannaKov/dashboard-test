@@ -1,5 +1,6 @@
 #import pandas as pd # pip install pandas openpyxl
 import streamlit as st  # pip install streamlit
+import datetime
 #import plotly.express as px  # pip install plotly-express
 #from data import get_data_from_excel
 st.html("./custom.css")
@@ -63,4 +64,20 @@ st.write("Cogs: ", round(cogs, 4) if price and quantity else "-")
 st.write("Margin percent: ", round(margin_percent, 4) if price and quantity else "-")
 st.write("Gross income: ", round(gross_income, 4) if price and quantity else "-")
 
+#----------------
+payment = st.selectbox(
+    "Payment method",
+    ["Ewallet","Cash", "Credit Card", ],help="Select a payment method"
+)
+#----------------
+today = datetime.datetime.now()
+start_date = datetime.date(2022, 1, 1)
+date = st.date_input("Date",value=today, min_value=start_date,max_value=today,  format="YYYY-MM-DD", help="Select a date")
+# time = st.time_input("Time", value=None, help="Select a time")
+hour = st.selectbox("Hour", list(range(0, 24)), format_func=lambda x: f"{x:02}")
+minute = st.selectbox("Minute", list(range(0, 60)), format_func=lambda x: f"{x:02}")
+time = datetime.time(hour, minute)
+st.write("Selected time:", time)
+
+st.write("The current date is", date)
 #----------------
