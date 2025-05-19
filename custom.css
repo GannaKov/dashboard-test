@@ -54,3 +54,10 @@ div[data-baseweb="base-input"] > input {
   background-color: #f5f5f5 !important;
   color: black;
 }
+.st-emotion-cache-c4cxnz {
+  background-color: #f5f5f5 !important;
+  color: black;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #04631d;
+}
