@@ -1,6 +1,7 @@
 #import pandas as pd # pip install pandas openpyxl
 import streamlit as st  # pip install streamlit
 import datetime
+from append_data import append_data_to_excel 
 #import plotly.express as px  # pip install plotly-express
 #from data import get_data_from_excel
 st.html("./custom.css")
@@ -94,3 +95,12 @@ time = datetime.time(hour, minute)
 st.write("Selected time:", time)
 
 #----------------
+# with st.form("my_form"):
+#    st.write("Inside the form")
+#    my_number = st.slider('Pick a number', 1, 10)
+#    my_color = st.selectbox('Pick a color', ['red','orange','green','blue','violet'])
+#    st.form_submit_button('Submit my picks')
+animal = st.form('my_animal')
+
+sentence = animal.text_input('Your sentence:', 'Where\'s the tuna?')
+submit = animal.form_submit_button('add', on_click=append_data_to_excel)
