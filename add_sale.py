@@ -44,13 +44,7 @@ rating = add_form.number_input(
 )
 # if selected is not None:
 #     st.markdown(f"You selected {sentiment_mapping[selected]} star(s).")
-quantity = add_form.number_input(
-    "Quantity", value=None, placeholder="5", min_value=1, max_value=40, step=1, help="Enter quantity"
-)
 
-price = add_form.number_input(
-    "Unit price", value=None, placeholder="33.2", min_value=0.0, max_value=1000.0, step=0.1, help="Enter price"
-)
 
 # if price and quantity:
 #     tax = quantity * price * 0.05
@@ -90,21 +84,59 @@ with container:
 
     with col2:
         minute = st.selectbox("Minute", list(range(0, 60)), format_func=lambda x: f"{x:02}")
-time= f"{hour:02}:{minute:02}:00"  # Format the time as HH:MM:SS    
+time= f"{hour:02}:{minute:02}:00"  # Format the time as HH:MM:SS  
+quantity = add_form.number_input(
+    "Quantity", value=None, placeholder="5", min_value=1, max_value=40, step=1, help="Enter quantity"
+)
+
+price = add_form.number_input(
+    "Unit price", value=None, placeholder="33.2", min_value=0.0, max_value=1000.0, step=0.1, help="Enter price"
+)  
 submit = add_form.form_submit_button('Add')
 if_submit=False
 if submit:
-    # Проверка: заполнены ли все поля
+    # Check if all required fields are filled
+    required_fields = [
+        invoice_id, hour, minute, payment, date, gender,
+        age, product_line, branch, city, customer_type,
+        quantity, price, rating
+    ]
     	
 
-    if invoice_id and hour and minute and payment and date and gender and age and product_line and branch and city and customer_type and quantity and price and rating   is not None:
+    if all(field is not None and field != "" for field in required_fields):
         if_submit=True
-        append_data_to_excel()
+        
         tax = quantity * price * 0.05
         total = quantity * price + tax
         cogs = quantity * price
         margin_percent = 4.7619
-        gross_income = total - cogs       
+        gross_income = total - cogs    
+        data_to_add = {
+            'Invoice ID': invoice_id,
+            'Branch': branch,
+            'City': city,
+
+            'Customer_type': customer_type,
+            "Gender": gender,
+            "Age": age,
+
+            "Rating": rating,
+            "Product line": product_line,
+            "Payment": payment,
+
+            "Date": date,
+            "Time": time,
+
+            "Quantity": quantity,
+            "Unit price": price,
+            "Total": total,
+
+            "Tax 5%": tax,
+            "Cogs": cogs,
+            "Gross margin percentage": margin_percent,
+            "Gross income": gross_income,
+            }
+        append_data_to_excel(data_to_add )   
     else:
         st.warning("Please fill in all fields before submitting.")
 

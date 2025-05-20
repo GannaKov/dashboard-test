@@ -5,24 +5,31 @@ import streamlit as st
 from openpyxl import load_workbook
 
 
-def append_data_to_excel():
+def append_data_to_excel(data_to_add):
     file_path = 'sales.xlsx'
     sheet_name = 'Sales'
-   
-    
-    
-    
+#	Rating	Age																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													
+        
     df1 = pd.DataFrame({
-            'Invoice ID': ['911-11-1111'],
-            'Branch': ['A'],
-            'City': ['Berlin'],
-            'Customer_type': ['Member'],   
-    		"Gender":['Male'],	"Product line":['Health and beauty'],	"Unit price":[35.56],	
-            "Quantity":[7],	"Tax 5%":[3.24],	"Total":[100],	"Date":["26/04/2024"],	
-            "Time":['13:08'],	"Payment":['Cash'],	"cogs":[13.15],	
-            "gross margin percentage":[4.761904762],	"gross income":[26.8],	
-            "Rating":[9.3],	"Age":[23],																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												
-})
+            'Invoice ID': [data_to_add["Invoice ID"]],
+            'Branch': [data_to_add["Branch"]],
+            'City': [data_to_add["City"]],
+            'Customer_type': [data_to_add["Customer_type"]],           
+    		"Gender":[data_to_add["Gender"]],
+            "Product line":[data_to_add["Product line"]],
+            "Unit price":[data_to_add["Unit price"]],
+            "Quantity":[data_to_add["Quantity"]],
+            "Tax 5%":[data_to_add["Tax 5%"]], 
+            "Total":[data_to_add["Total"]],
+            "Date":[data_to_add["Date"]],
+            "Time":[data_to_add["Time"]],
+            "Payment":[data_to_add["Payment"]],
+            "cogs":[data_to_add["Cogs"]],
+            "gross margin percentage":[data_to_add["Gross margin percentage"]],
+            "gross income":[data_to_add["Gross income"]],
+            "Rating":[data_to_add["Rating"]],
+            "Age":[data_to_add["Age"]], })   
+
     # load the existing workbook 
     workbook = load_workbook(file_path)
     worksheet = workbook[sheet_name]
@@ -33,8 +40,7 @@ def append_data_to_excel():
         if worksheet.cell(row=row, column=2).value is None:
             start_row = row
             break
-    print("max_row",start_row)
-    print("max",worksheet.max_row)
+    
     workbook.close()
     with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
         
