@@ -13,10 +13,16 @@ def append_data_to_excel():
     
     
     df1 = pd.DataFrame({
-            'Invoice ID': ['311-11-1111'],
+            'Invoice ID': ['911-11-1111'],
             'Branch': ['A'],
             'City': ['Berlin'],
-            'Customer Type': ['Member'],  }) 
+            'Customer_type': ['Member'],   
+    		"Gender":['Male'],	"Product line":['Health and beauty'],	"Unit price":[35.56],	
+            "Quantity":[7],	"Tax 5%":[3.24],	"Total":[100],	"Date":["26/04/2024"],	
+            "Time":['13:08'],	"Payment":['Cash'],	"cogs":[13.15],	
+            "gross margin percentage":[4.761904762],	"gross income":[26.8],	
+            "Rating":[9.3],	"Age":[23],																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																												
+})
     # load the existing workbook 
     workbook = load_workbook(file_path)
     worksheet = workbook[sheet_name]
@@ -43,7 +49,7 @@ def append_data_to_excel():
         )
     
     st.success("Data appended successfully!")
-    st.write("Data appended to Excel file.")
+    
 
     
     
