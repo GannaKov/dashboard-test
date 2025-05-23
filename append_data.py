@@ -34,12 +34,13 @@ def append_data_to_excel(data_to_add):
     workbook = load_workbook(file_path)
     worksheet = workbook[sheet_name]
     #get the last row in the worksheet
-    start_row = 5
-    #start_row = worksheet.max_row + 1 
-    for row in range(5, worksheet.max_row + 2):
-        if worksheet.cell(row=row, column=2).value is None:
-            start_row = row
-            break
+    
+    start_row = worksheet.max_row+1  
+    #start_row = 5
+    # for row in range(5, worksheet.max_row + 2):
+    #     if worksheet.cell(row=row, column=2).value is None:
+    #         start_row = row
+    #         break
     
     workbook.close()
     with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
@@ -50,7 +51,7 @@ def append_data_to_excel(data_to_add):
             sheet_name=sheet_name, 
             index=False,
             header=False,         # don't write the header again
-            startrow=start_row-1,# # start writing from the first row
+            startrow=start_row-1,# -1 to account for 0-indexing
             startcol=1            # Start writing from the first column B not A
         )
     

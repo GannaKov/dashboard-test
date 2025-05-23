@@ -2,7 +2,7 @@
 import streamlit as st  # pip install streamlit
 
 
-from data import get_data_from_excel
+from get_data import get_data_from_excel
 
 # ---- READ EXCEL ----
 

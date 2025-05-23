@@ -1,8 +1,7 @@
-import pandas as pd # pip install pandas openpyxl
+
 import streamlit as st  # pip install streamlit
 
-import plotly.express as px  # pip install plotly-express
-from data import get_data_from_excel
+
 
 #import numpy as np # I needed it for update exel file
 
@@ -43,8 +42,8 @@ st.logo(
 #---Pages---
 # Define the pages
 
-main_page = st.Page("page1.py", title="Sales Overview", icon="📊")
-page_2 = st.Page("page2.py", title="User Analytics", icon="📈")
+main_page = st.Page("sales_overview.py", title="Sales Overview", icon="📊")
+page_2 = st.Page("user_analytics.py", title="User Analytics", icon="📈")
 page_3 = st.Page("view_data.py", title="Sales Data", icon="📋")
 page_4 = st.Page("add_sale.py", title="Add Sale", icon="➕")
 # Set up navigation
