@@ -89,12 +89,13 @@ st.subheader(f"Average Sales Per Transaction:&nbsp;&nbsp;&nbsp;US $ {average_sal
 st.markdown("""---""")
 #==========================================
 # TOTAL BY Date [LINE CHART]
-df_selection["Year-Month"] =pd.to_datetime(df_selection["Date"]).dt.to_period("M")
-sales_by_month = df_selection.groupby(by=["Year-Month"])[["Total"]].sum().sort_values("Year-Month").reset_index()
-sales_by_month["Year-Month"] = sales_by_month["Year-Month"].dt.strftime("%Y-%m") 
+st.subheader("Total Sales by Month")
+df_selection["Year_Month"] =pd.to_datetime(df_selection["Date"]).dt.to_period("M")
+sales_by_month = df_selection.groupby(by=["Year_Month"])[["Total"]].sum().sort_values("Year_Month").reset_index()
+sales_by_month["Year_Month"] = sales_by_month["Year_Month"].dt.strftime("%Y-%m") 
 
-sales_by_month.set_index("Year-Month", inplace=True)
-print(sales_by_month.head(5))
+sales_by_month.set_index("Year_Month", inplace=True)
+
 fig_monthly_sales=st.line_chart(
     sales_by_month,
 
@@ -103,9 +104,12 @@ fig_monthly_sales=st.line_chart(
     color=["#0083B8"],
     
 )
-
-fig = px.line(sales_by_month, x="Year-Month", y="Total", title='Life expectancy in Canada')
-st.plotly_chart(fig, use_container_width=True)
+#with plotty
+# df_selection["Year_Month"] = pd.to_datetime(df_selection["Date"]).dt.to_period("M").dt.strftime("%Y-%m")
+# sales_by_month = df_selection.groupby(by=["Year_Month"])[["Total"]].sum().sort_values("Year_Month").reset_index()
+# print(sales_by_month.dtypes)
+# fig = px.line(sales_by_month, x="Year_Month", y="Total", title='Total Sales by Month', markers=True)
+# st.plotly_chart(fig, use_container_width=True)
 #=======================================
 # SALES BY PRODUCT LINE [BAR CHART]
 sales_by_product_line = df_selection.groupby(by=["Product line"])[["Total"]].sum().sort_values(by="Total")
