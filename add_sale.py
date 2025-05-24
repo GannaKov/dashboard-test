@@ -137,6 +137,7 @@ if submit:
             "Gross income": gross_income,
             }
         append_data_to_excel(data_to_add )   
+        st.cache_data.clear()
     else:
         st.warning("Please fill in all fields before submitting.")
 
