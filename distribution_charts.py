@@ -1,7 +1,7 @@
 import plotly.express as px  # pip install plotly-express
 import pandas as pd
 import streamlit as st  # pip install streamlit
-from data import get_data_from_excel
+from get_data import get_data_from_excel
 
 
 def plot_distribution_pie(df, query_str, query_vars, distr_col, label_name, title_prefix, color_set):

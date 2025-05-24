@@ -2,7 +2,7 @@ import pandas as pd # pip install pandas openpyxl
 import streamlit as st  # pip install streamlit
 
 import plotly.express as px  # pip install plotly-express
-from data import get_data_from_excel
+from get_data import get_data_from_excel
 
 
 # emojis: https://www.webfx.com/tools/emoji-cheat-sheet/
@@ -53,7 +53,7 @@ gender = st.sidebar.multiselect(
 
 df_selection = df.query(
     "City == @city & Customer_type ==@customer_type & Gender == @gender"
-)
+).copy()
 
 
 
@@ -87,7 +87,30 @@ st.markdown("")
 st.subheader(f"Average Sales Per Transaction:&nbsp;&nbsp;&nbsp;US $ {average_sale_by_transaction}")  
 
 st.markdown("""---""")
+#==========================================
+# TOTAL BY Date [LINE CHART]
+st.subheader("Total Sales by Month")
+df_selection["Year_Month"] =pd.to_datetime(df_selection["Date"]).dt.to_period("M")
+sales_by_month = df_selection.groupby(by=["Year_Month"])[["Total"]].sum().sort_values("Year_Month").reset_index()
+sales_by_month["Year_Month"] = sales_by_month["Year_Month"].dt.strftime("%Y-%m") 
 
+sales_by_month.set_index("Year_Month", inplace=True)
+
+fig_monthly_sales=st.line_chart(
+    sales_by_month,
+
+    y="Total",
+   
+    color=["#0083B8"],
+    
+)
+#with plotty
+# df_selection["Year_Month"] = pd.to_datetime(df_selection["Date"]).dt.to_period("M").dt.strftime("%Y-%m")
+# sales_by_month = df_selection.groupby(by=["Year_Month"])[["Total"]].sum().sort_values("Year_Month").reset_index()
+# print(sales_by_month.dtypes)
+# fig = px.line(sales_by_month, x="Year_Month", y="Total", title='Total Sales by Month', markers=True)
+# st.plotly_chart(fig, use_container_width=True)
+#=======================================
 # SALES BY PRODUCT LINE [BAR CHART]
 sales_by_product_line = df_selection.groupby(by=["Product line"])[["Total"]].sum().sort_values(by="Total")
 
@@ -101,12 +124,8 @@ fig_product_sales = px.bar(
     template="plotly_white",
 )
 
-# fig_product_sales.update_layout(
-#     plot_bgcolor="rgba(0,0,0,0)",
-#     xaxis=(dict(showgrid=False))
-# )
-#st.plotly_chart(fig_product_sales)
 
+#=======================================
 # SALES BY HOUR [BAR CHART]
 sales_by_hour = df_selection.groupby(by=["hour"])[["Total"]].sum()
 
@@ -124,4 +143,7 @@ left_column, right_column = st.columns(2, gap="medium")
 
 left_column.plotly_chart(fig_hourly_sales, use_container_width=True)
 right_column.plotly_chart(fig_product_sales, use_container_width=True)
+
+#=========================================================
+
 

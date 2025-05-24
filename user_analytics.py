@@ -1,7 +1,7 @@
 import pandas as pd # pip install pandas openpyxl
 import streamlit as st  # pip install streamlit
 import plotly.express as px  # pip install plotly-express
-from data import get_data_from_excel
+from get_data import get_data_from_excel
 from distribution_charts import plot_distribution_pie
 
 # ---- READ EXCEL ----
