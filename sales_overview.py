@@ -1,6 +1,6 @@
 import pandas as pd # pip install pandas openpyxl
 import streamlit as st  # pip install streamlit
-
+import datetime
 import plotly.express as px  # pip install plotly-express
 from get_data import get_data_from_excel
 
@@ -50,12 +50,19 @@ gender = st.sidebar.multiselect(
     default=df["Gender"].unique(),
     
 )
+# -----Create df_selection ----
+today = datetime.datetime.now().date()
+start_date = datetime.date(2022, 1, 1)
+date_range=[start_date, today]  # Default date range
+
+
+print("111",date_range)
 
 df_selection = df.query(
-    "City == @city & Customer_type ==@customer_type & Gender == @gender"
+    "City == @city & Customer_type ==@customer_type & Gender == @gender & Date >= @date_range[0] &  @date_range[1]>=Date  "
 ).copy()
 
-
+#& Date >= @date_range[0] &  @date_range[1]>=Date
 
 
 # Check if the dataframe is empty:
@@ -65,6 +72,7 @@ if df_selection.empty:
 
 
 # ---- MAINPAGE ----
+# ----- TOP ------
 st.title(":bar_chart: Sales Dashboard")
 st.markdown("")
 
@@ -88,6 +96,16 @@ st.subheader(f"Average Sales Per Transaction:&nbsp;&nbsp;&nbsp;US $ {average_sal
 
 st.markdown("""---""")
 #==========================================
+#----- BOTTOM -----
+# ---- Date Filter ----
+date_range_form = st.form('date_range_form')
+
+date_range_imput = date_range_form.date_input("Date range",[start_date ,today], min_value=start_date,max_value=today,  format="DD.MM.YYYY", help="Select date range")
+submit = date_range_form.form_submit_button('Submit')
+date_range=[date_range_imput[0], date_range_imput[1]]
+print("222",date_range)
+# print("Beg",date_range[0])
+# print("End",date_range[1])
 # TOTAL BY Date [LINE CHART]
 st.subheader("Total Sales by Month")
 df_selection["Year_Month"] =pd.to_datetime(df_selection["Date"]).dt.to_period("M")
