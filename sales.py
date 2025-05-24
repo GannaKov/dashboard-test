@@ -62,7 +62,7 @@ date_range_imput = date_range_form.date_input("Date range",[start_date ,today], 
 submit = date_range_form.form_submit_button('Submit')
 date_range=[date_range_imput[0], date_range_imput[1]]
 
-
+print("111",date_range)
 
 df_selection = df.query(
     "City == @city & Customer_type ==@customer_type & Gender == @gender & Date >= @date_range[0] &  @date_range[1]>=Date  "
@@ -109,8 +109,9 @@ st.markdown("""---""")
 # date_range_imput = date_range_form.date_input("Date range",[start_date ,today], min_value=start_date,max_value=today,  format="DD.MM.YYYY", help="Select date range")
 # submit = date_range_form.form_submit_button('Submit')
 # date_range=[date_range_imput[0], date_range_imput[1]]
-
-
+print("222",date_range)
+# print("Beg",date_range[0])
+# print("End",date_range[1])
 # TOTAL BY Date [LINE CHART]
 st.subheader("Total Sales by Month")
 df_selection["Year_Month"] =pd.to_datetime(df_selection["Date"]).dt.to_period("M")
@@ -130,7 +131,7 @@ fig_monthly_sales=st.line_chart(
 #with plotty
 # df_selection["Year_Month"] = pd.to_datetime(df_selection["Date"]).dt.to_period("M").dt.strftime("%Y-%m")
 # sales_by_month = df_selection.groupby(by=["Year_Month"])[["Total"]].sum().sort_values("Year_Month").reset_index()
-
+# print(sales_by_month.dtypes)
 # fig = px.line(sales_by_month, x="Year_Month", y="Total", title='Total Sales by Month', markers=True)
 # st.plotly_chart(fig, use_container_width=True)
 #=======================================
