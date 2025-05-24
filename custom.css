@@ -62,16 +62,19 @@ div[data-baseweb="base-input"] > input {
   border: 1px solid #04631d;
 }
 /* for date  in add_sale  */
-div[data-baseweb="calendar"] button.st-bp {
+/* div[data-baseweb="calendar"] button.st-bp {
+  color: rgb(221, 224, 221);
+} */
+div[data-baseweb="calendar"] button {
   color: rgb(221, 224, 221);
 }
 div[role="presentation"] .st-fl {
   color: rgb(221, 224, 221);
 }
 /* for date range in sales_overview  */
-div[data-baseweb="calendar"] button.st-e5 {
+/* div[data-baseweb="calendar"] button.st-e6 {
   color: rgb(221, 224, 221);
-}
+} */
 
 div[role="presentation"] .st-fb {
   color: rgb(221, 224, 221);

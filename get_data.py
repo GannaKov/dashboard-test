@@ -11,7 +11,7 @@ def get_data_from_excel():
         sheet_name="Sales",
         skiprows=3,
         usecols="B:S",
-        nrows=1000,
+        #nrows=1000,
     )
     df["Date"] = pd.to_datetime(df["Date"], format="%Y-%m-%d").dt.date
     df["hour"] = pd.to_datetime(df["Time"], format="%H:%M:%S").dt.hour

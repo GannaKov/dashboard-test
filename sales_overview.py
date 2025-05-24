@@ -51,10 +51,16 @@ gender = st.sidebar.multiselect(
     
 )
 # -----Create df_selection ----
+st.title(":bar_chart: Sales Dashboard")
+st.markdown("")
 today = datetime.datetime.now().date()
 start_date = datetime.date(2022, 1, 1)
-date_range=[start_date, today]  # Default date range
+#date_range=[start_date, today]  # Default date range
+date_range_form = st.form('date_range_form')
 
+date_range_imput = date_range_form.date_input("Date range",[start_date ,today], min_value=start_date,max_value=today,  format="DD.MM.YYYY", help="Select date range")
+submit = date_range_form.form_submit_button('Submit')
+date_range=[date_range_imput[0], date_range_imput[1]]
 
 print("111",date_range)
 
@@ -73,8 +79,8 @@ if df_selection.empty:
 
 # ---- MAINPAGE ----
 # ----- TOP ------
-st.title(":bar_chart: Sales Dashboard")
-st.markdown("")
+# st.title(":bar_chart: Sales Dashboard")
+# st.markdown("")
 
 # TOP KPI's
 total_sales = int(df_selection["Total"].sum())
@@ -98,11 +104,11 @@ st.markdown("""---""")
 #==========================================
 #----- BOTTOM -----
 # ---- Date Filter ----
-date_range_form = st.form('date_range_form')
+# date_range_form = st.form('date_range_form')
 
-date_range_imput = date_range_form.date_input("Date range",[start_date ,today], min_value=start_date,max_value=today,  format="DD.MM.YYYY", help="Select date range")
-submit = date_range_form.form_submit_button('Submit')
-date_range=[date_range_imput[0], date_range_imput[1]]
+# date_range_imput = date_range_form.date_input("Date range",[start_date ,today], min_value=start_date,max_value=today,  format="DD.MM.YYYY", help="Select date range")
+# submit = date_range_form.form_submit_button('Submit')
+# date_range=[date_range_imput[0], date_range_imput[1]]
 print("222",date_range)
 # print("Beg",date_range[0])
 # print("End",date_range[1])
