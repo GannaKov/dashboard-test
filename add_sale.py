@@ -114,8 +114,12 @@ if submit:
             "Gross margin percentage": margin_percent,
             "Gross income": gross_income,
             }
-        append_data_to_excel(data_to_add )   
-        st.cache_data.clear()
+        success, error = append_data_to_excel(data_to_add )   
+        if success:
+           st.cache_data.clear()
+           st.success("Data appended successfully! ✅")
+        else:
+           st.error(f"Error saving file: {error}")   
     else:
         st.warning("Please fill in all fields before submitting.")
 

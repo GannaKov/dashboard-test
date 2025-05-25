@@ -4,6 +4,7 @@ from openpyxl import load_workbook
 
 
 def append_data_to_excel(data_to_add):
+  try:  
     file_path = 'sales.xlsx'
     sheet_name = 'Sales'
 #	Rating	Age																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													
@@ -46,10 +47,11 @@ def append_data_to_excel(data_to_add):
             startrow=start_row-1,# -1 to account for 0-indexing
             startcol=1            # Start writing from the first column B not A
         )
+    return True, None  # Success
     
-    st.success("Data appended successfully! ✅")
     
-
+  except Exception as e:
+        return False, str(e)  # Error occurred
     
     
     
