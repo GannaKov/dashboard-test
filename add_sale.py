@@ -1,9 +1,7 @@
-#import pandas as pd # pip install pandas openpyxl
 import streamlit as st  # pip install streamlit
 import datetime
 from append_data import append_data_to_excel 
-#import plotly.express as px  # pip install plotly-express
-#from data import get_data_from_excel
+
 st.html("./custom.css")
 
 st.title("📋 Add Sale")
@@ -42,23 +40,6 @@ age = add_form.number_input(
 rating = add_form.number_input(
     "Rating", value=None, placeholder="10", min_value=0.0, max_value=10.0, step=0.1, help="Enter rating"
 )
-# if selected is not None:
-#     st.markdown(f"You selected {sentiment_mapping[selected]} star(s).")
-
-
-# if price and quantity:
-#     tax = quantity * price * 0.05
-#     total = quantity * price + tax
-#     cogs = quantity * price
-#     margin_percent = 4.7619
-#     gross_income = total - cogs
-
-#add_form.text(strr)   
-# st.write("Tax 5%: ", round(tax, 4) if price and quantity else "-")
-# st.write("Total: ", round(total , 4) if price and quantity else "-")
-# st.write("Cogs: ", round(cogs, 4) if price and quantity else "-")
-# st.write("Margin percent: ", round(margin_percent, 4) if price and quantity else "-")
-# st.write("Gross income: ", round(gross_income, 4) if price and quantity else "-")
 
 #----------------
 payment = add_form.selectbox(
@@ -69,10 +50,7 @@ payment = add_form.selectbox(
 today = datetime.datetime.now()
 start_date = datetime.date(2022, 1, 1)
 date = add_form.date_input("Date",value=today, min_value=start_date,max_value=today,  format="YYYY-MM-DD", help="Select a date")
-# time = st.time_input("Time", value=None, help="Select a time")
 
-# hour = st.selectbox("Hour", list(range(0, 24)), format_func=lambda x: f"{x:02}")
-# minute = st.selectbox("Minute", list(range(0, 60)), format_func=lambda x: f"{x:02}")
 
 container = add_form.container(border=True,key="time_container")
 with container:
@@ -136,8 +114,12 @@ if submit:
             "Gross margin percentage": margin_percent,
             "Gross income": gross_income,
             }
-        append_data_to_excel(data_to_add )   
-        st.cache_data.clear()
+        success, error = append_data_to_excel(data_to_add )   
+        if success:
+           st.cache_data.clear()
+           st.success("Data appended successfully! ✅")
+        else:
+           st.error(f"Error saving file: {error}")   
     else:
         st.warning("Please fill in all fields before submitting.")
 
@@ -146,13 +128,4 @@ st.write("Cogs: ", round(cogs, 4) if if_submit else "-")
 st.write("Margin percent: ", round(margin_percent, 4) if if_submit else "-")
 st.write("Gross income: ", round(gross_income, 4) if if_submit else "-")
 st.write("Tax 5%: ", round(tax, 4) if if_submit else "-")
-#st.success('This is a success message!', icon="✅")
-#st.toast('Your edited image was saved!', icon='😍')
-#----------------
-# with st.form("my_form"):
-#    st.write("Inside the form")
-#    my_number = st.slider('Pick a number', 1, 10)
-#    my_color = st.selectbox('Pick a color', ['red','orange','green','blue','violet'])
-#    st.form_submit_button('Submit my picks')
-
 

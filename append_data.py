@@ -1,11 +1,10 @@
-
-
 import pandas as pd
 import streamlit as st
 from openpyxl import load_workbook
 
 
 def append_data_to_excel(data_to_add):
+  try:  
     file_path = 'sales.xlsx'
     sheet_name = 'Sales'
 #	Rating	Age																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																													
@@ -33,19 +32,13 @@ def append_data_to_excel(data_to_add):
     # load the existing workbook 
     workbook = load_workbook(file_path)
     worksheet = workbook[sheet_name]
+
     #get the last row in the worksheet
-    
     start_row = worksheet.max_row+1  
-    #start_row = 5
-    # for row in range(5, worksheet.max_row + 2):
-    #     if worksheet.cell(row=row, column=2).value is None:
-    #         start_row = row
-    #         break
     
     workbook.close()
     with pd.ExcelWriter(file_path, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
         
-        #writer.sheets = {ws.title: ws for ws in workbook.worksheets}
         df1.to_excel(
             writer,
             sheet_name=sheet_name, 
@@ -54,10 +47,11 @@ def append_data_to_excel(data_to_add):
             startrow=start_row-1,# -1 to account for 0-indexing
             startcol=1            # Start writing from the first column B not A
         )
+    return True, None  # Success
     
-    st.success("Data appended successfully!")
     
-
+  except Exception as e:
+        return False, str(e)  # Error occurred
     
     
     
