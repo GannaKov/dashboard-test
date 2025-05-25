@@ -18,8 +18,7 @@ edited_df = st.data_editor(df)
 
 if st.button("💾 Save Changes"):
     success, error = save_edited_data(edited_df)
-    print("success", success)
-    print("error", error)
+   
     if success:
         st.cache_data.clear()  # Clear the cache to reflect changes
         st.success("Changes saved successfully!")

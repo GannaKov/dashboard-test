@@ -117,22 +117,42 @@ df_selection["Year_Month"] =pd.to_datetime(df_selection["Date"]).dt.to_period("M
 sales_by_month = df_selection.groupby(by=["Year_Month"])[["Total"]].sum().sort_values("Year_Month").reset_index()
 sales_by_month["Year_Month"] = sales_by_month["Year_Month"].dt.strftime("%Y-%m") 
 
-sales_by_month.set_index("Year_Month", inplace=True)
 
-fig_monthly_sales=st.line_chart(
-    sales_by_month,
+#sales_by_month.set_index("Year_Month", inplace=True)
 
-    y="Total",
+# fig_monthly_sales=st.line_chart(
+#     sales_by_month,
+
+#     y="Total",
    
-    color=["#0083B8"],
+#     color=["#0083B8"],
     
-)
-#with plotty
-# df_selection["Year_Month"] = pd.to_datetime(df_selection["Date"]).dt.to_period("M").dt.strftime("%Y-%m")
-# sales_by_month = df_selection.groupby(by=["Year_Month"])[["Total"]].sum().sort_values("Year_Month").reset_index()
+# )
+#var with plotty
+# fig_hourly_sales = px.bar(
+#    sales_by_month,
+#     #x=sales_by_month.index,
+#     x="Year_Month",
+#     y="Total",
+#     title="<b>Sales Total</b>",
+#     #color_discrete_sequence=["#0083B8"] * len(sales_by_month),
+#     color_discrete_sequence=["#43AD23"],
+    
+#     template="plotly_white",
+#     text_auto=True
+    
+# )
+# st.plotly_chart(fig_hourly_sales, use_container_width=True)
 
-# fig = px.line(sales_by_month, x="Year_Month", y="Total", title='Total Sales by Month', markers=True)
-# st.plotly_chart(fig, use_container_width=True)
+#with streamlit
+st.bar_chart(
+    sales_by_month,
+    x="Year_Month",
+    x_label ="Month-Year",
+    y="Total",
+    color="#43AD23",  
+)
+
 #=======================================
 # SALES BY PRODUCT LINE [BAR CHART]
 sales_by_product_line = df_selection.groupby(by=["Product line"])[["Total"]].sum().sort_values(by="Total")
