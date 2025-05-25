@@ -3,11 +3,15 @@ import streamlit as st  # pip install streamlit
 import plotly.express as px  # pip install plotly-express
 from get_data import get_data_from_excel
 from distribution_charts import plot_distribution_pie
-
+import datetime
 # ---- READ EXCEL ----
 df = get_data_from_excel()
 
 st.html("./custom.css")
+
+
+
+
 
 # for age group
 # Create age groups
@@ -62,10 +66,32 @@ age_group = st.sidebar.selectbox(
 # ---- PAGE ----
 st.title("📈 User Analytics Dashboard")
 st.markdown("")
+
+# ---- Date Filter ----
+today = datetime.datetime.now().date()
+start_date = datetime.date(2022, 1, 1)
+date_range_form = st.form('date_range_form')
+
+date_range_imput = date_range_form.date_input("Date range",[start_date ,today], min_value=start_date,max_value=today,  format="DD.MM.YYYY", help="Select date range")
+submit = date_range_form.form_submit_button('Submit')
+date_range=[date_range_imput[0], date_range_imput[1]]
+
+df_selection = df.query(
+    "Date >= @date_range[0] &  @date_range[1]>=Date  "
+).copy()
+
+# Check if the dataframe is empty:
+if df_selection.empty:
+    st.warning("No data available based on the current filter settings!")
+    st.stop() # This will halt the app from further execution.
+
+
+# GENERAL OVERVIEW
 st.subheader("General Overview")
 
 # pie chart Gender
-gender_counts = df['Gender'].value_counts().reset_index()
+#gender_counts = df['Gender'].value_counts().reset_index()
+gender_counts = df_selection['Gender'].value_counts().reset_index()
 gender_counts.columns = ['Gender', 'Count']
 
 
@@ -73,22 +99,22 @@ fig_gender = px.pie(gender_counts, names='Gender', values='Count', title='Gender
              color_discrete_map={'Male':'royalblue',
                                  'Female':'tomato',
                                  'Other':'green'})
-#st.plotly_chart(fig_gender)
+
 
 # pie chart Sity
-city_counts = df['City'].value_counts().reset_index()
+city_counts = df_selection['City'].value_counts().reset_index()
 city_counts.columns = ['City', 'Count']
 fig_city = px.pie(city_counts, names='City', values='Count', title='City Distribution',)
 #st.plotly_chart(fig_city)
 
 # pie chart Customer_type
-customer_type_counts = df['Customer_type'].value_counts().reset_index()
+customer_type_counts = df_selection['Customer_type'].value_counts().reset_index()
 customer_type_counts.columns = ['Type', 'Count']
 fig_customer_type = px.pie(customer_type_counts, names='Type', values='Count', title='Customer Type Distribution', color_discrete_sequence=px.colors.qualitative.Dark2)
 #st.plotly_chart(fig_customer_type)
 
 # pie chart Age
-age_group_counts = df['Age Group'].value_counts().sort_index().reset_index()
+age_group_counts = df_selection['Age Group'].value_counts().sort_index().reset_index()
 
 age_group_counts.columns = ['Age Group', 'Count']
 fig_age = px.pie(
@@ -98,10 +124,6 @@ fig_age = px.pie(
     title='Age Group Distribution',
     color_discrete_sequence=px.colors.qualitative.Bold
 )
-#st.plotly_chart(fig_age)
-
-
-
 
 
 first_column, second_column,third_column , = st.columns(3,gap="small")
@@ -113,14 +135,14 @@ st.plotly_chart(fig_city)
 st.markdown("""---""") 
 #=======================================
 #=======================================
-
+#  BOTTOM
 # Distribution in Age Group
 
 
 st.subheader(f"Age Group Distribution")
 # Age By City
 fig_age_by_city= plot_distribution_pie(
-    df,
+    df_selection,
     query_str="City == @city",
     query_vars={"city": city},
     distr_col="Age Group",
@@ -146,7 +168,7 @@ fig_age_by_city= plot_distribution_pie(
 
 #------------Age by customer Type---
 fig_age_by_customer_type= plot_distribution_pie(
-    df,
+    df_selection,
     query_str="Customer_type ==@customer_type"   ,
     query_vars={"customer_type": customer_type},
     distr_col="Age Group",
@@ -172,7 +194,7 @@ fig_age_by_customer_type= plot_distribution_pie(
 
 #--------Age by Gender-------
 fig_age_by_gender= plot_distribution_pie(
-    df,
+    df_selection,
     query_str="Gender == @gender"   ,
     query_vars={"gender": gender},
     distr_col="Age Group",
@@ -210,7 +232,7 @@ third_age_column.plotly_chart(fig_age_by_gender, use_container_width=True)
 st.subheader(f"City Distribution")
 # City By Age Group
 fig_city_by_age = plot_distribution_pie(
-    df,
+    df_selection,
     query_str="`Age Group` == @age_group"  ,
     query_vars={"age_group": age_group},
     distr_col="City",
@@ -236,7 +258,7 @@ fig_city_by_age = plot_distribution_pie(
 
 #------------City by customer Type---
 fig_city_by_customer_type = plot_distribution_pie(
-    df,
+    df_selection,
     query_str="Customer_type ==@customer_type"  ,
     query_vars={"customer_type": customer_type},
     distr_col="City",
@@ -263,7 +285,7 @@ fig_city_by_customer_type = plot_distribution_pie(
 
 #--------City by Gender-------
 fig_city_by_gender= plot_distribution_pie(
-    df,
+    df_selection,
     query_str="Gender == @gender"   ,
     query_vars={"gender": gender},
     distr_col="City",
@@ -300,7 +322,7 @@ st.subheader(f"Gender Distribution")
 
 # Gender By City
 fig_gender_by_city = plot_distribution_pie(
-    df,
+    df_selection,
     query_str="City == @city"  ,
     query_vars={"city": city},
     distr_col="Gender",
@@ -327,7 +349,7 @@ fig_gender_by_city = plot_distribution_pie(
 # Gender By Customer Type
 
 fig_gender_by_customer_type = plot_distribution_pie(
-    df,
+    df_selection,
     query_str="Customer_type ==@customer_type"  ,
     query_vars={"customer_type": customer_type},
     distr_col="Gender",
@@ -354,7 +376,7 @@ fig_gender_by_customer_type = plot_distribution_pie(
 
 # Gender By Age Group
 fig_gender_by_age= plot_distribution_pie(
-    df,
+    df_selection,
     query_str="`Age Group` == @age_group"  ,
     query_vars={"age_group": age_group},
     distr_col="Gender",
@@ -404,7 +426,7 @@ st.subheader(f"Customer Type Distribution")
 # )
 #st.plotly_chart(fig_customer_type_by_city)
 fig_customer_type_by_city = plot_distribution_pie(
-    df,
+    df_selection,
     query_str="City == @city"  ,
     query_vars={"city": city},
     distr_col="Customer_type",
@@ -431,7 +453,7 @@ fig_customer_type_by_city = plot_distribution_pie(
 # )
 #st.plotly_chart(fig_customer_type_by_age)
 fig_customer_type_by_age = plot_distribution_pie(
-    df,
+    df_selection,
     query_str="`Age Group` == @age_group" ,
     query_vars={"age_group": age_group},
     distr_col="Customer_type",
@@ -457,7 +479,7 @@ fig_customer_type_by_age = plot_distribution_pie(
 # )
 #st.plotly_chart(fig_customer_type_by_gender)
 fig_customer_type_by_gender = plot_distribution_pie(
-    df,
+    df_selection,
     query_str="Gender == @gender",
     query_vars={"gender": gender},
     distr_col="Customer_type",
@@ -473,7 +495,7 @@ third_customer_type_column.plotly_chart(fig_customer_type_by_city, use_container
 #=========================================
 #df, query_str, query_vars, distr_col, label_name, title_prefix, color_set
 fff = plot_distribution_pie(
-    df,
+    df_selection,
     query_str="Gender == @gender",
     query_vars={"gender": gender},
     distr_col="Customer_type",
