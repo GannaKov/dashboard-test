@@ -71,7 +71,12 @@ date_range_form = st.form('date_range_form')
 
 date_range_imput = date_range_form.date_input("Date range",[start_date ,today], min_value=start_date,max_value=today,  format="DD.MM.YYYY", help="Select date range")
 submit = date_range_form.form_submit_button('Submit')
-date_range=[date_range_imput[0], date_range_imput[1]]
+if len(date_range_imput) == 2 and date_range_imput[0] <= date_range_imput[1]:
+   date_range=[date_range_imput[0], date_range_imput[1]]
+else:
+    st.warning("Please select a valid date range!") 
+    date_range = [start_date, today]  
+
 
 df_selection = df.query(
     "Date >= @date_range[0] &  @date_range[1]>=Date  "
@@ -85,6 +90,7 @@ if df_selection.empty:
 
 # GENERAL OVERVIEW
 # TOP
+st.subheader(f":blue[Report period: {date_range[0].strftime('%d.%m.%Y')} – {date_range[1].strftime('%d.%m.%Y')}]",divider=True)
 st.subheader("General Overview")
 
 # pie chart Gender
