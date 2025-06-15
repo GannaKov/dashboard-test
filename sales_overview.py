@@ -5,7 +5,7 @@ import plotly.express as px  # pip install plotly-express
 from get_data import get_data_from_excel
 
 
-# emojis: https://www.webfx.com/tools/emoji-cheat-sheet/
+
 
 # custom CSS
 
