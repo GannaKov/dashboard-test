@@ -77,7 +77,7 @@ else:
     st.warning("Please select a valid date range!") 
     date_range = [start_date, today]  
 
-
+# create a copy of the dataframe with the selected date range
 df_selection = df.query(
     "Date >= @date_range[0] &  @date_range[1]>=Date  "
 ).copy()
