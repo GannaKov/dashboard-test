@@ -19,6 +19,7 @@ df = get_data_from_excel()
 # ---- SIDEBAR ----
 
 st.sidebar.header("Please Filter Here:")
+
 city = st.sidebar.multiselect(
     "Select City:",
     options=df["City"].unique(),
@@ -39,7 +40,7 @@ gender = st.sidebar.multiselect(
     default=df["Gender"].unique(),
     
 )
-# -----Create df_selection ----
+
 st.title(":bar_chart: Sales Dashboard")
 st.markdown("")
 
@@ -59,6 +60,8 @@ else:
 
 # ---- Filter DataFrame ----
 # Filter the DataFrame based on the selections
+
+# -----Create df_selection ----
 df_selection = df.query(
     "City == @city & Customer_type ==@customer_type & Gender == @gender & Date >= @date_range[0] &  @date_range[1]>=Date  "
 ).copy()
@@ -72,7 +75,6 @@ if df_selection.empty:
 
 # ---- MAINPAGE ----
 # ----- TOP ------
-# TOP 
 
 st.subheader(f":blue[Report period: {date_range[0].strftime('%d.%m.%Y')} – {date_range[1].strftime('%d.%m.%Y')}]",divider=True)
 total_sales = int(df_selection["Total"].sum())
@@ -95,7 +97,6 @@ st.subheader(f"Average Sales Per Transaction:&nbsp;&nbsp;&nbsp;US $ {average_sal
 st.markdown("""---""")
 #==========================================
 #----- BOTTOM -----
-# ---- Date Filter ----
 
 # TOTAL BY Date [BAR CHART]
 st.subheader("Total Sales by Month")
