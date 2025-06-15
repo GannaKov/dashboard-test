@@ -11,10 +11,10 @@ The app includes the following pages:
   An analytical view of user-related data and behavior.
 
 - 📋 **Sales Data (view_data.py):**
-  Displays sales and user data from an Excel file in a table with filtering options. Users can view, explore, and select specific records.
+  Displays sales and user data from an Excel file in a table with filtering options. Users can view, explore, select, and edit specific records.
 
 - ➕ **Add Sale (add_sale.py):**
-  Allows users to add or edit entries directly in the Excel file through a form-based interface.
+  Allows users to add entries directly in the Excel file through a form-based interface.
 
 This application is a lightweight and interactive alternative to Excel spreadsheets for small teams or individuals looking to track and manage both sales and user information in one place.
 
@@ -35,12 +35,12 @@ This application is a lightweight and interactive alternative to Excel spreadshe
 │
 ├── README.md                  # Project documentation
 │
-├── app.py                     # Main entry point (optional, if used)
+├── app.py                     # Main entry point
 │
 ├── add_sale.py                # Page: Add new sale
 ├── view_data.py               # Page: View and edit raw sales data
 ├── sales_overview.py          # Page: Sales overview with filters and charts
-├── user_analytics.py          # Page: User analytics (age, gender, rating, etc.)
+├── user_analytics.py          # Page: User analytics (age, gender, city, etc.)
 │
 ├── get_data.py                # Function: Load data from Excel
 ├── append_data.py             # Function: Append new sale to Excel
