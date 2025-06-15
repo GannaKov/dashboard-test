@@ -20,7 +20,7 @@ This application is a lightweight and interactive alternative to Excel spreadshe
 
 ---
 
-## Project Structure
+# Project Structure
 
 ```bash
 ├── .streamlit/                 # Streamlit config folder (theme, etc.)
@@ -64,17 +64,7 @@ All components are lightweight, open-source, and work well together in a Streaml
 
 ---
 
-## 🧑‍💻 Requirements
-
-To install all required dependencies, run:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## Installation
+# 🧑‍💻 Installation
 
 1. Clone the repository:
 
@@ -101,7 +91,7 @@ Navigate to: http://localhost:8501
 
 ---
 
-## 📘 Usage
+# 📘 Usage
 
 This application provides a streamlined dashboard for managing and analyzing sales data.
 
@@ -147,6 +137,12 @@ The Sales Overview page provides a high-level dashboard summarizing key sales me
 
 This page is ideal for monitoring performance over time, understanding peak hours, and identifying top-selling categories.
 
+![Sales Overview](images/readmeImg/page1_1.png)
+
+![Sales Overview](images/readmeImg/page1_2.png)
+
+![Sales Overview](images/readmeImg/page1_3.png)
+
 ---
 
 ## 📈 User Analytics
@@ -170,6 +166,10 @@ This page provides a comprehensive analytical view of user-related data and beha
 
 This dashboard helps uncover trends and patterns in customer demographics, supporting better business insights and decisions.
 
+![User Analytics](images/readmeImg/page2_1.png)
+
+![User Analytics](images/readmeImg/page2_2.png)
+
 ---
 
 ## 📋 Sales Data
@@ -191,6 +191,8 @@ The Sales Data page provides a tabular view of all sales and user data sourced f
   - Automatically clears Streamlit's data cache to reflect real-time updates
 
 This page offers a lightweight and user-friendly alternative to manually editing spreadsheets, especially useful for teams managing shared data or reviewing historical records.
+
+![Sales Data](images/readmeImg/page3_1.png)
 
 ---
 
@@ -215,11 +217,13 @@ The Add Sale page provides a comprehensive form-based interface to add new sales
 
 This page streamlines adding sales data while minimizing errors, making it ideal for quick, accurate data entry by sales teams or analysts.
 
+![Add Sale](images/readmeImg/page4_1.png)
+
+![Add Sale](images/readmeImg/page4_2.png)
+
 ---
 
-## Data Source
-
----
+### just for me
 
 sequential —
 px.colors.sequential.Blues
